@@ -39,12 +39,9 @@
                             <i class="fa fa-bars"></i> All category
                         </button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Machinery / Mechanical Parts / Tools </a>
-                            <a class="dropdown-item" href="#">Consumer Electronics / Home Appliances </a>
-                            <a class="dropdown-item" href="#">Auto / Transportation</a>
-                            <a class="dropdown-item" href="#">Apparel / Textiles / Timepieces </a>
-                            <a class="dropdown-item" href="#">Home & Garden / Construction / Lights </a>
-                            <a class="dropdown-item" href="#">Beauty & Personal Care / Health </a>
+                            {% for category in links %}
+                            <a class="dropdown-item" href="{{ category.get_url }}">{{ category.category_name }}</a>
+                            {% endfor %}
                         </div>
                     </div>  <!-- category-wrap.// -->
                 </div> <!-- col.// -->
