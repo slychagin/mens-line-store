@@ -14,7 +14,7 @@ class Category(models.Model):
 
     def get_url(self):
         """
-        Get url to use in navbar
+        Get category url to use in navbar and left menu
         :return: url for particular category
         """
         return reverse('products_by_category', args=[self.slug])

@@ -31,13 +31,11 @@
 			<div class="card-body">
 
 				<ul class="list-menu">
-				<li><a href="#">People  </a></li>
-				<li><a href="#">Watches </a></li>
-				<li><a href="#">Cinema  </a></li>
-				<li><a href="#">Clothes  </a></li>
-				<li><a href="#">Home items </a></li>
-				<li><a href="#">Animals</a></li>
-				<li><a href="#">People </a></li>
+				<li><a href="{% url 'store' %}">All Products</a></li>
+				{% for category in links %}
+				<li><a href="{{ category.get_url }}">{{ category.category_name }}</a></li>
+				{% endfor %}
+
 				</ul>
 
 			</div> <!-- card-body.// -->
@@ -135,12 +133,12 @@
 		<figure class="card card-product-grid">
 			<div class="img-wrap">
 
-				<img src="{{ product.product_image.url }}">
+				<a href="{{ product.get_url }}"><img src="{{ product.product_image.url }}"></a>
 
 			</div> <!-- img-wrap.// -->
 			<figcaption class="info-wrap">
 				<div class="fix-height">
-					<a href="./product-detail.html" class="title">{{ product.product_name }}</a>
+					<a href="{{ product.get_url }}" class="title">{{ product.product_name }}</a>
 					<div class="price-wrap mt-2">
 						<span class="price">${{ product.price }}</span>
 					</div> <!-- price-wrap.// -->
@@ -151,29 +149,6 @@
 	</div> <!-- col.// -->
     {% endfor %}
 </div> <!-- row end.// -->
-
-<!--<div class="row">-->
-<!--	<div class="col-md-4">-->
-<!--		<figure class="card card-product-grid">-->
-<!--			<div class="img-wrap">-->
-
-<!--				<img src="{% static 'images/items/1.jpg' %}">-->
-
-<!--			</div> &lt;!&ndash; img-wrap.// &ndash;&gt;-->
-<!--			<figcaption class="info-wrap">-->
-<!--				<div class="fix-height">-->
-<!--					<a href="./product-detail.html" class="title">Great item name goes here</a>-->
-<!--					<div class="price-wrap mt-2">-->
-<!--						<span class="price">$1280</span>-->
-<!--						<del class="price-old">$1980</del>-->
-<!--					</div> &lt;!&ndash; price-wrap.// &ndash;&gt;-->
-<!--				</div>-->
-<!--				<a href="#" class="btn btn-block btn-success">Added to cart </a>-->
-<!--			</figcaption>-->
-<!--		</figure>-->
-<!--	</div> &lt;!&ndash; col.// &ndash;&gt;-->
-<!--</div> &lt;!&ndash; row end.// &ndash;&gt;-->
-
 
 <nav class="mt-4" aria-label="Page navigation sample">
   <ul class="pagination">
