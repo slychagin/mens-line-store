@@ -7,16 +7,22 @@
 <div class="container">
 
 <!-- ============================ COMPONENT 1 ================================= -->
-
+{% if not cart_items %}
+	<div class="text-center">
+		<h2>Ваша корзина пуста</h2>
+	<br>
+		<a href="{% url 'store' %}" class="btn btn-primary">Продолжить покупки</a>
+	</div>
+{% else %}
 <div class="row">
 	<aside class="col-lg-9">
 <div class="card">
 <table class="table table-borderless table-shopping-cart">
 <thead class="text-muted">
 <tr class="small text-uppercase">
-  <th scope="col">Product</th>
-  <th scope="col" width="120">Quantity</th>
-  <th scope="col" width="120">Price</th>
+  <th scope="col">Товар</th>
+  <th scope="col" width="120">Количество</th>
+  <th scope="col" width="120">Цена</th>
   <th scope="col" class="text-right" width="200"> </th>
 </tr>
 </thead>
@@ -27,7 +33,7 @@
 		<figure class="itemside align-items-center">
 			<div class="aside"><img src="{{ cart_item.product.product_image.url }}" class="img-sm"></div>
 			<figcaption class="info">
-				<a href="#" class="title text-dark">{{ cart_item.product.product_name }}</a>
+				<a href="{{ cart_item.product.get_url }}" class="title text-dark">{{ cart_item.product.product_name }}</a>
 				<p class="text-muted small">Color: 25 Mpx <br> Size: Canon</p>
 			</figcaption>
 		</figure>
@@ -37,7 +43,7 @@
 					<div class="col">
 						<div class="input-group input-spinner">
 							<div class="input-group-prepend">
-							<a class="btn btn-light" type="button" id="button-plus"> <i class="fa fa-minus"></i> </a>
+							<a href="{% url 'remove_cart' cart_item.product.id %}" class="btn btn-light" type="button" id="button-plus"> <i class="fa fa-minus"></i> </a>
 							</div>
 							<input type="text" class="form-control"  value="{{ cart_item.quantity }}">
 							<div class="input-group-append">
@@ -48,18 +54,24 @@
 	</td>
 	<td>
 		<div class="price-wrap">
-			<var class="price">$ {{ cart_item.sub_total }}</var>
-			<small class="text-muted"> $ {{ cart_item.product.price }} each </small>
+			<var class="price">{{ cart_item.sub_total }} ₽</var>
+			<small class="text-muted"> {{ cart_item.product.price }} ₽ за шт. </small>
 		</div> <!-- price-wrap .// -->
 	</td>
 	<td class="text-right">
-	<a href="" class="btn btn-danger"> Remove</a>
+	<a href="{% url 'remove_cart_item' cart_item.product.id %}" class="btn btn-outline-secondary">Удалить</a>
 	</td>
 </tr>
 {% endfor %}
 
 </tbody>
+
 </table>
+
+
+	<p style="text-indent: 30px" class="text-muted small"><sup>*</sup>Скидка рассчитывается от объема заказа: при сумме заказа до 5000 руб. - 3%, от 5000 руб. и выше - 7% </p>
+
+
 </div> <!-- card.// -->
 
 	</aside> <!-- col.// -->
@@ -68,23 +80,23 @@
 		<div class="card">
 		<div class="card-body">
 			<dl class="dlist-align">
-			  <dt>Total price:</dt>
-			  <dd class="text-right">$ {{ total }}</dd>
+			  <dt>Всего:</dt>
+			  <dd class="text-right">{{ total }} ₽</dd>
 			</dl>
 			<dl class="dlist-align">
-			  <dt>Tax:</dt>
-			  <dd class="text-right"> $10.00</dd>
+			  <dt>Скидка:</dt>
+			  <dd class="text-right">- {{ discount }} ₽</dd>
 			</dl>
 			<dl class="dlist-align">
-			  <dt>Total:</dt>
-			  <dd class="text-right text-dark b"><strong>$59.97</strong></dd>
+				<dt><b>Итого:</b></dt>
+			  <dd class="text-right text-dark b"><strong>{{ grand_total }} ₽</strong></dd>
 			</dl>
 			<hr>
 			<p class="text-center mb-3">
 				<img src="{% static './images/misc/payments.png' %}" height="26">
 			</p>
-			<a href="./place-order.html" class="btn btn-primary btn-block"> Checkout </a>
-			<a href="./store.html" class="btn btn-light btn-block">Continue Shopping</a>
+			<a href="./place-order.html" class="btn btn-primary btn-block"> Оформить заказ </a>
+			<a href="{% url 'store' %}" class="btn btn-light btn-block">Продолжить покупки</a>
 		</div> <!-- card-body.// -->
 		</div> <!-- card.// -->
 
@@ -93,7 +105,7 @@
 
 </div> <!-- row.// -->
 <!-- ============================ COMPONENT 1 END .// ================================= -->
-
+{% endif %}
 </div> <!-- container .//  -->
 </section>
 <!-- ========================= SECTION CONTENT END// ========================= -->
