@@ -47,10 +47,11 @@
                     </div>  <!-- category-wrap.// -->
                 </div> <!-- col.// -->
                 <a href="{% url 'store' %}" class="btn btn-outline-primary">Store</a>
+
                 <div class="col-lg  col-md-6 col-sm-12 col">
-                    <form action="#" class="search">
+                    <form action="{% url 'search' %}" class="search" method="GET">
                         <div class="input-group w-100">
-                            <input type="text" class="form-control" style="width:60%;" placeholder="Search">
+                            <input type="text" class="form-control" style="width:60%;" placeholder="Search" name="keyword">
 
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="submit">
@@ -60,6 +61,7 @@
                         </div>
                     </form> <!-- search-wrap .end// -->
                 </div> <!-- col.// -->
+
                 <div class="col-lg-3 col-sm-6 col-8 order-2 order-lg-3">
                     <div class="d-flex justify-content-end mb-3 mb-lg-0">
                         <div class="widget-header">

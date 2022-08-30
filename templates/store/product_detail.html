@@ -70,7 +70,7 @@
 	</div> <!-- row.// -->
 	<hr>
 	{% if single_product.stock <= 0 %}
-	<h5 class="text-danger">Out of Stock</h5>
+	<h5 class="text-danger">Нет в наличии</h5>
 	{% else %}
 		{% if not in_cart %}
 			<a href="{% url 'add_cart' single_product.id %}" class="btn btn-primary"> <span class="text">Купить</span> <i class="fas fa-shopping-cart"></i>  </a>
