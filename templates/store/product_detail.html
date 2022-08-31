@@ -59,12 +59,14 @@
 		{% if single_product.stock <= 0 %}
 		<h5 class="text-danger">Нет в наличии</h5>
 		{% else %}
-			{% if not in_cart %}
-				<button type="submit" class="btn btn-primary"> <span class="text">Купить</span> <i class="fas fa-shopping-cart"></i>  </button>
-			{% else %}
-				<a href="{% url 'cart' %}" class="btn btn-outline-success"> <span class="text">В корзине</span> <i class="fas fa-check"></i>  </a>
-			{% endif %}
+		<button type="submit" class="btn btn-primary"> <span class="text">Купить</span> <i class="fas fa-shopping-cart"></i>  </button>
 		{% endif %}
+
+<!--		{% if not in_cart %}-->
+<!--				<button type="submit" class="btn btn-primary"> <span class="text">Купить</span> <i class="fas fa-shopping-cart"></i>  </button>-->
+<!--			{% else %}-->
+<!--				<a href="{% url 'cart' %}" class="btn btn-outline-success"> <span class="text">В корзине</span> <i class="fas fa-check"></i>  </a>-->
+<!--			{% endif %}-->
 	</article> <!-- product-info-aside .// -->
 	</form>
 		</main> <!-- col.// -->

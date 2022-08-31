@@ -1,4 +1,5 @@
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Cart, CartItem
 from store.models import Product, Variation
@@ -18,7 +19,7 @@ def _cart_id(request):
 
 def add_cart(request, product_id):
     """
-    Add the particular product to the cart by product id.
+    Add the particular product to the cart by product id and variations (color, size, etc.).
     :param request:
     :param product_id: id of the product we want to add to the cart
     :return: redirect user to 'cart' page
@@ -45,48 +46,71 @@ def add_cart(request, product_id):
         )
         cart.save()
 
-    try:
-        cart_item = CartItem.objects.get(product=product, cart=cart)
-        cart_item.quantity += 1
-        cart_item.save()
-    except ObjectDoesNotExist:
+    is_cart_item_exists = CartItem.objects.filter(product=product, cart=cart).exists()
+    if is_cart_item_exists:
+        cart_item = CartItem.objects.filter(product=product, cart=cart)
+        existing_variation_list = [list(item.variations.all()) for item in cart_item]
+        item_id_list = [item.id for item in cart_item]
+
+        if product_variation in existing_variation_list:
+            # increase the cart item quantity
+            item_index = existing_variation_list.index(product_variation)
+            item = CartItem.objects.get(product=product, id=item_id_list[item_index])
+            item.quantity += 1
+            item.save()
+        else:
+            # create a new cart item
+            item = CartItem.objects.create(product=product, quantity=1, cart=cart)
+            if len(product_variation) > 0:
+                item.variations.clear()
+                item.variations.add(*product_variation)
+            item.save()
+    else:
         cart_item = CartItem.objects.create(
             product=product,
             quantity=1,
             cart=cart
         )
+        if len(product_variation) > 0:
+            cart_item.variations.clear()
+            cart_item.variations.add(*product_variation)
         cart_item.save()
     return redirect('cart')
 
 
-def remove_cart(request, product_id):
+def remove_cart(request, product_id, cart_item_id):
     """
     Pressing the minus button decreases the quantity of product by one.
+    :param cart_item_id:
     :param request:
     :param product_id:
     :return: render cart page with new quantity
     """
     cart = Cart.objects.get(cart_id=_cart_id(request))
     product = get_object_or_404(Product, id=product_id)
-    cart_item = CartItem.objects.get(product=product, cart=cart)
-    if cart_item.quantity > 1:
-        cart_item.quantity -= 1
-        cart_item.save()
-    else:
-        cart_item.delete()
+    try:
+        cart_item = CartItem.objects.get(product=product, cart=cart, id=cart_item_id)
+        if cart_item.quantity > 1:
+            cart_item.quantity -= 1
+            cart_item.save()
+        else:
+            cart_item.delete()
+    except:
+        pass
     return redirect('cart')
 
 
-def remove_cart_item(request, product_id):
+def remove_cart_item(request, product_id, cart_item_id):
     """
     Pressing the remove button delete product from cart.
+    :param cart_item_id:
     :param request:
     :param product_id:
     :return: render cart page with new list of products
     """
     cart = Cart.objects.get(cart_id=_cart_id(request))
     product = get_object_or_404(Product, id=product_id)
-    cart_item = CartItem.objects.get(product=product, cart=cart)
+    cart_item = CartItem.objects.get(product=product, cart=cart, id=cart_item_id)
     cart_item.delete()
     return redirect('cart')
 
