@@ -76,7 +76,7 @@
                         <div class="widget-header">
                             <small class="title text-muted">Добро пожаловать, {{ user.first_name }}!</small>
                             <div>
-                                <a href="#">Dashboard</a> <span class="dark-transp"> | </span>
+                                <a href="{% url 'dashboard' %}">Dashboard</a> <span class="dark-transp"> | </span>
                                 <a href="{% url 'logout' %}">Выйти</a>
                             </div>
                         </div>

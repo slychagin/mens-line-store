@@ -2,10 +2,20 @@
 
 
 {% block content %}
-<!-- ========================= SECTION CONTENT ========================= -->
+
 <section class="section-conten padding-y" style="min-height:84vh">
 
 <!-- ============================ COMPONENT LOGIN   ================================= -->
+    {% if request.GET.command == 'verification' %}
+
+    <div class="container mx-auto alert alert-info text-center" role="alert" style="max-width: 1024px; margin-top:100px;">
+    Спасибо за вашу регистрацию в нашем магазине. Мы отправили письмо активации на ваш электронный адрес [{{ request.GET.email }}]
+    <br><br>
+    Уже зарегистрированы? <a href="{% url 'login' %}">Войти</a>
+    </div>
+
+    {% else %}
+
 	<div class="card mx-auto" style="max-width: 380px; margin-top:100px;">
       <div class="card-body">
       <h4 class="card-title mb-4">Вход</h4>
@@ -33,7 +43,7 @@
      <p class="text-center mt-4">Нет учетной записи? <a href="{% url 'register' %}">Регистрация</a></p>
      <br><br>
 <!-- ============================ COMPONENT LOGIN  END.// ================================= -->
-
+{% endif %}
 
 </section>
 <!-- ========================= SECTION CONTENT END// ========================= -->
