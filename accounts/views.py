@@ -11,6 +11,9 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from accounts.forms import RegistrationForm
 from accounts.models import Account
 from django.contrib.auth.decorators import login_required
+from carts.models import Cart, CartItem
+from carts.views import _cart_id
+import requests
 
 
 def register(request):
@@ -58,9 +61,47 @@ def login(request):
 
         user = auth.authenticate(email=email, password=password)
         if user is not None:
+            try:
+                cart = Cart.objects.get(cart_id=_cart_id(request))
+                is_cart_item_exists = CartItem.objects.filter(cart=cart).exists()
+                if is_cart_item_exists:
+                    cart_item = CartItem.objects.filter(cart=cart)
+
+                    # Getting the product variation by cart id
+                    product_variation = [list(item.variations.all()) for item in cart_item]
+
+                    # Get the cart items from the user to access his product variation
+                    cart_item = CartItem.objects.filter(user=user)
+                    existing_variation_list = [list(item.variations.all()) for item in cart_item]
+                    item_id_list = [item.id for item in cart_item]
+
+                    for prod_var in product_variation:
+                        if prod_var in existing_variation_list:
+                            item_index = existing_variation_list.index(prod_var)
+                            item_id = item_id_list[item_index]
+                            item = CartItem.objects.get(id=item_id)
+                            item.quantity += 1
+                            item.user = user
+                            item.save()
+                        else:
+                            cart_item = CartItem.objects.filter(cart=cart)
+                            for item in cart_item:
+                                item.user = user
+                                item.save()
+            except:
+                pass
             auth.login(request, user)
             messages.success(request, 'Вы вошли на сайт.')
-            return redirect('dashboard')
+            url = request.META.get('HTTP_REFERER')
+            try:
+                query = requests.utils.urlparse(url).query
+                # query take us this -> next=/cart/checkout/
+                params = dict(x.split('=') for x in query.split('&'))
+                if 'next' in params:
+                    next_page = params['next']
+                    return redirect(next_page)
+            except:
+                return redirect('dashboard')
         else:
             messages.error(request, 'Неверные логин или пароль.')
             return redirect('login')
