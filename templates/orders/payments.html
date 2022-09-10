@@ -28,7 +28,7 @@
                 <div class="card">
                   <h5 class="card-header">Метод оплаты</h5>
                   <div class="card-body">
-                    <p class="card-text">PayPal</p>
+                    <p class="card-text">ЮKassa</p>
                   </div>
                 </div>
 
@@ -102,15 +102,15 @@
                         <p class="text-center mb-3">
                             <img src="{% static './images/misc/payments.png' %}" height="26">
                         </p>
-                        <a href="{% url 'checkout' %}" class="btn btn-primary btn-block"> Оплатить </a>
+
+                        <a href="{% url 'yookassa_payment' %}" class="btn btn-primary btn-block"> Оплатить </a>
+
                     </div> <!-- card-body.// -->
                 </div> <!-- card.// -->
-
             </aside> <!-- col.// -->
-
         </div> <!-- row.// -->
-
     </div> <!-- container .//  -->
 </section>
+
 
 {% endblock %}
