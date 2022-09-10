@@ -5,13 +5,16 @@ from carts.models import CartItem
 from orders.forms import OrderForm
 from orders.models import Order, Payment
 from yookassa import Configuration, Payment as PayKassa
+from dotenv import load_dotenv
 import uuid
+import os
+
+load_dotenv(override=True)
 
 
 # YOOKASSA PAYMENT
-YOOKASSA_API_ENDPOINT = 'https://api.yookassa.ru/v3/'
-YOOKASSA_SECRET_KEY = 'test_SVXUDxz3BKwu9st7lXBoIsn0tEbka-ZQmhOaojZRLkY'
-YOOKASSA_SHOP_ID = '939489'
+yookassa_secret_key = os.environ.get('YOOKASSA_SECRET_KEY')
+yookassa_shop_id = os.environ.get('YOOKASSA_SHOP_ID')
 
 
 def payments(request):
@@ -106,8 +109,8 @@ def yookassa_payment(request):
     current_user = request.user
     order = Order.objects.get(user=current_user, is_ordered=False, order_number=order_number)
 
-    Configuration.account_id = YOOKASSA_SHOP_ID
-    Configuration.secret_key = YOOKASSA_SECRET_KEY
+    Configuration.account_id = yookassa_shop_id
+    Configuration.secret_key = yookassa_secret_key
 
     payment = PayKassa.create(
         {
