@@ -9,9 +9,12 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 from django.contrib.messages import constants as messages
+from dotenv import load_dotenv
+
+load_dotenv(override=True)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -147,3 +150,7 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'serg.programmer777@gmail.com'
 EMAIL_HOST_PASSWORD = 'dkulluumhvwhimiq'
 EMAIL_USE_TLS = True
+
+# YOOKASSA PAYMENT
+YOOKASSA_SECRET_KEY = os.environ.get('YOOKASSA_SECRET_KEY')
+YOOKASSA_SHOP_ID = os.environ.get('YOOKASSA_SHOP_ID')

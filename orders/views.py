@@ -1,20 +1,23 @@
 import json
-from datetime import datetime
-from django.shortcuts import render, redirect
-from carts.models import CartItem
-from orders.forms import OrderForm
-from orders.models import Order, Payment
-from yookassa import Configuration, Payment as PayKassa
-from dotenv import load_dotenv
 import uuid
 import os
-
-load_dotenv(override=True)
+from datetime import datetime
+from django.core.exceptions import ObjectDoesNotExist
+from django.core.mail import EmailMessage
+from django.http import JsonResponse
+from django.shortcuts import render, redirect
+from django.template.loader import render_to_string
+from carts.models import CartItem
+from mensline import settings
+from orders.forms import OrderForm
+from orders.models import Order, Payment, OrderProduct
+from yookassa import Configuration, Payment as PayKassa
+from store.models import Product
 
 
 # YOOKASSA PAYMENT
-yookassa_secret_key = os.environ.get('YOOKASSA_SECRET_KEY')
-yookassa_shop_id = os.environ.get('YOOKASSA_SHOP_ID')
+YOOKASSA_SECRET_KEY = settings.YOOKASSA_SECRET_KEY
+YOOKASSA_SHOP_ID = settings.YOOKASSA_SHOP_ID
 
 
 def payments(request):
@@ -24,8 +27,8 @@ def payments(request):
     transaction_id = body['transID']
     payment_object = PayKassa.find_one(transaction_id)
     payment_data = json.loads(payment_object.json())
-    status = payment_data['status']
 
+    # Store transaction details inside Payment model
     order = Order.objects.get(user=request.user, is_ordered=False, order_number=payment_data['metadata']['orderNumber'])
     payment = Payment(
         user=request.user,
@@ -39,7 +42,52 @@ def payments(request):
     order.payment = payment
     order.is_ordered = True
     order.save()
-    return render(request, 'orders/payments.html')
+
+    # Move the cart items to Order Product table
+    cart_items = CartItem.objects.filter(user=request.user)
+
+    for item in cart_items:
+        orderproduct = OrderProduct()
+        orderproduct.order_id = order.id
+        orderproduct.payment = payment
+        orderproduct.user_id = request.user.id
+        orderproduct.product_id = item.product_id
+        orderproduct.quantity = item.quantity
+        orderproduct.product_price = item.product.price
+        orderproduct.is_ordered = True
+        orderproduct.save()
+
+        cart_item = CartItem.objects.get(id=item.id)
+        product_variation = cart_item.variations.all()
+        orderproduct = OrderProduct.objects.get(id=orderproduct.id)
+        orderproduct.variations.set(product_variation)
+        orderproduct.save()
+
+        # Reduce the quantity of the sold products
+        product = Product.objects.get(id=item.product_id)
+        product.stock -= item.quantity
+        product.save()
+
+    # Clear cart
+    CartItem.objects.filter(user=request.user).delete()
+
+    # Send order received email to customer
+    mail_subject = 'Спасибо за Ваш заказ в MensLineStore!'
+    message = render_to_string('orders/order_received_email.html', {
+        'user': request.user,
+        'order': order
+    })
+    to_email = request.user.email
+    send_email = EmailMessage(mail_subject, message, to=[to_email])
+    send_email.send()
+
+    # Send order number and transaction id back to sendData method via JSONResponse
+    data = {
+        'order_number': payment_data['metadata']['orderNumber'],
+        'transID': payment_data['id']
+    }
+
+    return JsonResponse(data)
 
 
 order_number = None
@@ -109,8 +157,8 @@ def yookassa_payment(request):
     current_user = request.user
     order = Order.objects.get(user=current_user, is_ordered=False, order_number=order_number)
 
-    Configuration.account_id = yookassa_shop_id
-    Configuration.secret_key = yookassa_secret_key
+    Configuration.account_id = YOOKASSA_SHOP_ID
+    Configuration.secret_key = YOOKASSA_SECRET_KEY
 
     payment = PayKassa.create(
         {
@@ -137,7 +185,6 @@ def yookassa_payment(request):
         }, uuid.uuid4())
 
     payment_object = json.loads(payment.json())
-    print(payment_object)
 
     context = {
         'confirmation_token': payment_object['confirmation']['confirmation_token'],
@@ -145,3 +192,28 @@ def yookassa_payment(request):
         'order_number': order.order_number,
     }
     return render(request, 'orders/yookassa_payment.html', context)
+
+
+def order_complete(request):
+    order_complete_number = request.GET.get('order_number')
+    trans_id = request.GET.get('payment_id')
+
+    try:
+        order = Order.objects.get(order_number=order_complete_number, is_ordered=True)
+        ordered_products = OrderProduct.objects.filter(order_id=order.id)
+
+        sub_total = 0
+        for i in ordered_products:
+            sub_total += i.product_price * i.quantity
+
+        payment = Payment.objects.get(payment_id=trans_id)
+
+        context = {
+            'order': order,
+            'ordered_products': ordered_products,
+            'trans_id': payment.payment_id,
+            'subtotal': sub_total
+        }
+        return render(request, 'orders/order_complete.html', context)
+    except ObjectDoesNotExist:
+        return redirect('home')

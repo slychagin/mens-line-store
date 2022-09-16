@@ -21,13 +21,13 @@ function getCookie(name) {
     return cookieValue;
 }
 
-var token = "{{ confirmation_token }}"
-var url = "{% url 'payments' %}"
-var csrftoken = getCookie('csrftoken');
-var orderID = "{{ order_number }}"
-var transID = "{{ transaction_id }}"
-var payment_method = 'ЮKassa'
-
+const token = "{{ confirmation_token }}"
+const url = "{% url 'payments' %}"
+const csrftoken = getCookie('csrftoken');
+const orderID = "{{ order_number }}"
+const transID = "{{ transaction_id }}"
+const payment_method = 'ЮKassa'
+const redirect_url = "{% url 'order_complete' %}"
 
 const checkout = new window.YooMoneyCheckoutWidget({
     confirmation_token: token,
@@ -59,12 +59,10 @@ checkout.on('complete', () => {
             payment_method: payment_method,
           }),
         })
-    <!--     .then((response) => {-->
-    <!--    return response.json();-->
-    <!--  })-->
-    <!--  .then((data) => {-->
-    <!--    console.log(data);-->
-    <!--  });-->
+         .then((response) => response.json())
+         .then((data) => {
+            window.location.href = redirect_url + '?order_number=' + data.order_number + '&payment_id=' + data.transID;
+         });
       }
 
 checkout.destroy();
