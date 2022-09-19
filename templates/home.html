@@ -19,8 +19,8 @@
     <div class="container">
 
         <header class="section-heading">
-            <a href="{% url 'store' %}" class="btn btn-outline-primary float-right">See all</a>
-            <h3 class="section-title">Popular products</h3>
+            <a href="{% url 'store' %}" class="btn btn-outline-primary float-right">Посмотреть все</a>
+            <h3 class="section-title">Популярные товары</h3>
         </header><!-- sect-heading -->
 
 
@@ -31,7 +31,7 @@
                     <a href="{{ product.get_url }}" class="img-wrap"> <img src="{{ product.product_image.url }}"> </a>
                     <figcaption class="info-wrap">
                         <a href="{{ product.get_url }}" class="title">{{ product.product_name }}</a>
-                        <div class="price mt-1">${{ product.price }}</div> <!-- price-wrap.// -->
+                        <div class="price mt-1">{{ product.price }} ₽</div> <!-- price-wrap.// -->
                     </figcaption>
                 </div>
             </div>

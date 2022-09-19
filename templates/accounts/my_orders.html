@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="section-content padding-y bg">
+
+    {% include 'includes/alerts.html' %}
+    <div class="container">
+        <div class="row">
+            {% include 'includes/dashboard_sidebar.html' %}
+            <main class="col-md-9">
+                <article class="card">
+                    <header class="card-header">
+                        <strong class="d-inline-block mr-3">Ваша история заказов</strong>
+                    </header>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-hover">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">№ заказа</th>
+                                      <th scope="col">Получатель</th>
+                                      <th scope="col">Телефон</th>
+                                      <th scope="col">Сумма заказа</th>
+                                        <th scope="col">Дата</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                  {% for order in orders %}
+                                    <tr>
+                                      <th scope="row"><a href="{% url 'order_detail' order.order_number %}">{{order.order_number}}</a></th>
+                                      <td>{{order.full_name}}</td>
+                                      <td>{{order.phone}}</td>
+                                      <td>{{order.order_total}} ₽</td>
+                                      <td>{{order.created_at}}</td>
+                                    </tr>
+                                  {% endfor %}
+                                  </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+
+</section>
+
+{% endblock %}

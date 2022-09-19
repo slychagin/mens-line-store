@@ -4,15 +4,6 @@
 {% block content %}
 
 
-<div class="container" style="margin-top: 50px;">
-    <center><i class="fas fa-check-circle" style="font-size: 72px;margin-bottom: 20px;color: #28A745;"></i></center>
-    <h2 class="text-center">Оплата прошла успешно</h2>
-	<br>
-	<div class="text-center">
-		<a href="{% url 'store' %}" class="btn btn-success">Продолжить покупки</a>
-	</div>
-</div>
-
 <div class="container" style="margin: 0 auto;width: 50%;padding: 50px;background: #f1f1f1;margin-top: 50px;margin-bottom: 50px;">
     <div class="row invoice row-printable">
         <div class="col-md-12">
@@ -46,7 +37,7 @@
                                 <div class="well">
                                     <ul class="list-unstyled mb0">
                                         <li><strong>Заказ: </strong>{{ order.order_number }}</li>
-                                        <li><strong>ID транзакции: </strong>{{ trans_id }}</li>
+                                        <li><strong>ID транзакции: </strong>{{ order.payment.payment_id }}</li>
                                         <li><strong>Дата заказа: </strong>{{ order.created_at }}</li>
                                         <li><strong>Статус: </strong>{{ order.payment.status }}</li>
                                     </ul>
@@ -64,7 +55,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for item in ordered_products %}
+                                            {% for item in order_details %}
                                             <tr>
                                                 <td>{{ item.product.product_name }}
                                                     <p class="text-muted small">

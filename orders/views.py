@@ -212,7 +212,7 @@ def order_complete(request):
             'order': order,
             'ordered_products': ordered_products,
             'trans_id': payment.payment_id,
-            'subtotal': sub_total
+            'sub_total': sub_total
         }
         return render(request, 'orders/order_complete.html', context)
     except ObjectDoesNotExist:
