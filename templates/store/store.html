@@ -28,14 +28,14 @@
                         <header class="card-header">
                             <a href="#" data-toggle="collapse" data-target="#collapse_1" aria-expanded="true" class="">
                                 <i class="icon-control fa fa-chevron-down"></i>
-                                <h6 class="title">Categories</h6>
+                                <h6 class="title">Категории</h6>
                             </a>
                         </header>
                         <div class="filter-content collapse show" id="collapse_1" style="">
                             <div class="card-body">
 
                                 <ul class="list-menu">
-                                    <li><a href="{% url 'store' %}">All Products</a></li>
+                                    <li><a href="{% url 'store' %}">Все товары</a></li>
                                     {% for category in links %}
                                     <li><a href="{{ category.get_url }}">{{ category.category_name }}</a></li>
                                     {% endfor %}
@@ -44,12 +44,14 @@
 
                             </div> <!-- card-body.// -->
                         </div>
+
+
                     </article> <!-- filter-group  .// -->
                     <article class="filter-group">
                         <header class="card-header">
                             <a href="#" data-toggle="collapse" data-target="#collapse_4" aria-expanded="true" class="">
                                 <i class="icon-control fa fa-chevron-down"></i>
-                                <h6 class="title">Sizes </h6>
+                                <h6 class="title">Размеры</h6>
                             </a>
                         </header>
                         <div class="filter-content collapse show" id="collapse_4" style="">
@@ -81,7 +83,7 @@
                         <header class="card-header">
                             <a href="#" data-toggle="collapse" data-target="#collapse_3" aria-expanded="true" class="">
                                 <i class="icon-control fa fa-chevron-down"></i>
-                                <h6 class="title">Price range </h6>
+                                <h6 class="title">Диапазон цен</h6>
                             </a>
                         </header>
                         <div class="filter-content collapse show" id="collapse_3" style="">
@@ -89,7 +91,7 @@
 
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <label>Min</label>
+                                        <label>Мин.</label>
                                         <!-- <input class="form-control" placeholder="$0" type="number"> -->
                                         <select class="mr-2 form-control">
                                             <option value="0">$0</option>
@@ -102,7 +104,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group text-right col-md-6">
-                                        <label>Max</label>
+                                        <label>Макс.</label>
                                         <select class="mr-2 form-control">
                                             <option value="50">$50</option>
                                             <option value="100">$100</option>
@@ -114,7 +116,7 @@
                                         </select>
                                     </div>
                                 </div> <!-- form-row.// -->
-                                <button class="btn btn-block btn-primary">Apply</button>
+                                <button class="btn btn-block btn-primary">Применить</button>
                             </div><!-- card-body.// -->
                         </div>
                     </article> <!-- filter-group .// -->
