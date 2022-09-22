@@ -69,6 +69,10 @@ class Account(AbstractBaseUser):
     def has_module_perms(self, add_label):
         return True
 
+    class Meta:
+        verbose_name = 'Учетная запись'
+        verbose_name_plural = 'Учетные записи'
+
 
 class UserProfile(models.Model):
     objects = models.Manager()
@@ -86,6 +90,10 @@ class UserProfile(models.Model):
 
     def full_address(self):
         return f'{self.address_line_1}; {self.address_line_2}'
+
+    class Meta:
+        verbose_name = 'Профиль пользователя'
+        verbose_name_plural = 'Профили пользователей'
 
 
 

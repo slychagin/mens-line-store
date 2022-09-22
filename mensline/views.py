@@ -1,4 +1,6 @@
 from django.shortcuts import render
+
+from slider.models import Slider
 from store.models import Product, ReviewRating
 
 
@@ -9,8 +11,12 @@ def home(request):
     for product in products:
         reviews = ReviewRating.objects.filter(product_id=product.id, status=True)
 
+    # Get photos for slider
+    slider_list = Slider.objects.all()
+
     context = {
         'products': products,
-        'reviews': reviews
+        'reviews': reviews,
+        'slider_list': slider_list
     }
     return render(request, 'home.html', context)

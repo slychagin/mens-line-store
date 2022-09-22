@@ -29,6 +29,10 @@ class Product(models.Model):
     def __str__(self):
         return self.product_name
 
+    class Meta:
+        verbose_name = 'Товар'
+        verbose_name_plural = 'Товары'
+
     def average_review(self):
         reviews = ReviewRating.objects.filter(product=self, status=True).aggregate(average=Avg('rating'))
         avg = 0
@@ -71,6 +75,10 @@ class Variation(models.Model):
     def __str__(self):
         return self.variation_value
 
+    class Meta:
+        verbose_name = 'Вариация'
+        verbose_name_plural = 'Вариации'
+
 
 class ReviewRating(models.Model):
     objects = models.Manager()
@@ -88,6 +96,10 @@ class ReviewRating(models.Model):
     def __str__(self):
         return self.subject
 
+    class Meta:
+        verbose_name = 'Отзыв и оценка'
+        verbose_name_plural = 'Отзывы и оценки'
+
 
 class ProductGallery(models.Model):
     objects = models.Manager()
@@ -99,5 +111,4 @@ class ProductGallery(models.Model):
         return self.product.product_name
 
     class Meta:
-        verbose_name = 'productgallery'
-        verbose_name_plural = 'product gallery'
+        verbose_name_plural = 'Галерея товаров'

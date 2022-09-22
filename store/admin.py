@@ -30,6 +30,7 @@ class ReviewRatingAdmin(admin.ModelAdmin):
 class ProductGalleryAdmin(admin.ModelAdmin):
     def thumbnail(self, obj):
         return format_html('<img src="{}" width="40"">'.format(obj.image.url))
+
     thumbnail.short_description = 'Фото товара'
     list_display = ('product', 'thumbnail')
     list_display_links = ('product', 'thumbnail')

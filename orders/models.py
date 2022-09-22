@@ -17,6 +17,10 @@ class Payment(models.Model):
     def __str__(self):
         return self.payment_id
 
+    class Meta:
+        verbose_name = 'Оплата'
+        verbose_name_plural = 'Оплаты'
+
 
 class Order(models.Model):
     STATUS = (
@@ -58,6 +62,10 @@ class Order(models.Model):
     def __str__(self):
         return self.first_name
 
+    class Meta:
+        verbose_name = 'Заказ'
+        verbose_name_plural = 'Заказы'
+
 
 class OrderProduct(models.Model):
     objects = models.Manager()
@@ -75,4 +83,8 @@ class OrderProduct(models.Model):
 
     def __str__(self):
         return self.product.product_name
+
+    class Meta:
+        verbose_name = 'Товар в заказе'
+        verbose_name_plural = 'Товары в заказе'
 
