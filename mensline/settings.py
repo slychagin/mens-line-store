@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-import os
 from pathlib import Path
 from django.contrib.messages import constants as messages
 from decouple import config
@@ -42,6 +41,7 @@ INSTALLED_APPS = [
     'store',
     'carts',
     'orders',
+    'slider',
     'admin_honeypot'
 ]
 
@@ -115,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-RU'
 
 TIME_ZONE = 'Europe/Moscow'
 

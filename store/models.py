@@ -1,23 +1,23 @@
 from django.db import models
 from django.db.models import Avg, Count
 from django.urls import reverse
-
 from accounts.models import Account
 from category.models import Category
+from django.utils.translation import gettext_lazy as _
 
 
 class Product(models.Model):
     objects = models.Manager()
-    product_name = models.CharField(max_length=200, unique=True)
+    product_name = models.CharField(max_length=200, unique=True, verbose_name='Наименование товара')
     slug = models.SlugField(max_length=200, unique=True)
-    description = models.TextField(blank=True)
-    price = models.IntegerField()
-    product_image = models.ImageField(upload_to='photos/products')
-    stock = models.IntegerField()
-    is_available = models.BooleanField(default=True)
-    created_date = models.DateTimeField(auto_now_add=True)
-    modified_date = models.DateTimeField(auto_now=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    description = models.TextField(blank=True, verbose_name='Описание')
+    price = models.IntegerField(verbose_name='Цена')
+    product_image = models.ImageField(upload_to='photos/products', verbose_name='Фото товара')
+    stock = models.IntegerField(verbose_name='Количество на складе')
+    is_available = models.BooleanField(default=True, verbose_name='Доступен')
+    created_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    modified_date = models.DateTimeField(auto_now=True, verbose_name='Дата изменений')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория')
 
     def get_url(self):
         """
@@ -53,17 +53,18 @@ class VariationManager(models.Manager):
 
 
 variation_category_choice = (
-    ('color', 'color'),
-    ('size', 'size'),
+    ('color', 'цвет'),
+    ('size', 'размер'),
 )
 
 
 class Variation(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    variation_category = models.CharField(max_length=100, choices=variation_category_choice)
-    variation_value = models.CharField(max_length=100)
-    is_active = models.BooleanField(default=True)
-    created_date = models.DateTimeField(auto_now=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Товар')
+    variation_category = models.CharField(max_length=100, choices=variation_category_choice, verbose_name='Категория '
+                                                                                                          'вариации')
+    variation_value = models.CharField(max_length=100, verbose_name='Значение вариации')
+    is_active = models.BooleanField(default=True, verbose_name='Активно')
+    created_date = models.DateTimeField(auto_now=True, verbose_name='Дата создания')
 
     objects = VariationManager()
 
@@ -74,15 +75,15 @@ class Variation(models.Model):
 class ReviewRating(models.Model):
     objects = models.Manager()
 
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    user = models.ForeignKey(Account, on_delete=models.CASCADE)
-    subject = models.CharField(max_length=100, blank=True)
-    review = models.TextField(max_length=500, blank=True)
-    rating = models.FloatField()
-    ip = models.CharField(max_length=20, blank=True)
-    status = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Товар')
+    user = models.ForeignKey(Account, on_delete=models.CASCADE, verbose_name='Пользователь')
+    subject = models.CharField(max_length=100, blank=True, verbose_name='Тема')
+    review = models.TextField(max_length=500, blank=True, verbose_name='Отзыв')
+    rating = models.FloatField(verbose_name='Рейтинг')
+    ip = models.CharField(max_length=20, blank=True, verbose_name='IP адрес')
+    status = models.BooleanField(default=True, verbose_name='Статус')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
 
     def __str__(self):
         return self.subject
@@ -91,8 +92,8 @@ class ReviewRating(models.Model):
 class ProductGallery(models.Model):
     objects = models.Manager()
 
-    product = models.ForeignKey(Product, default=None, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='store/products', max_length=255)
+    product = models.ForeignKey(Product, default=None, on_delete=models.CASCADE, verbose_name='Товар')
+    image = models.ImageField(upload_to='store/products', max_length=255, verbose_name='Фото')
 
     def __str__(self):
         return self.product.product_name

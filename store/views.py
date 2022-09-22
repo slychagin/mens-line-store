@@ -91,17 +91,25 @@ def search(request):
     :param request:
     :return: Render 'store' page
     """
+    products = None
+    paged_products = None
+    product_count = None
     if 'keyword' in request.GET:
         keyword = request.GET['keyword']
-        products = Product.objects.order_by('-created_date').filter(
-            Q(description__icontains=keyword) | Q(product_name__icontains=keyword))
-        product_count = products.count()
-        if not keyword:
-            products = ''
-            product_count = 0
+        if keyword:
+            products = Product.objects.order_by('-created_date').filter(
+                Q(description__icontains=keyword) | Q(product_name__icontains=keyword))
+            if 'keyword' in request.GET and request.GET['keyword']:
+                page = request.GET.get('page')
+                keyword = request.GET['keyword']
+                paginator = Paginator(products, 3)
+            paged_products = paginator.get_page(page)
+            product_count = products.count()
+
     context = {
-        'products': products,
+        'products': paged_products,
         'product_count': product_count,
+        'keyword': keyword
     }
     return render(request, 'store/store.html', context)
 

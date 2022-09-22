@@ -9,17 +9,17 @@ class OrderProductInline(admin.TabularInline):
 
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['order_number', 'full_name', 'phone', 'email', 'city', 'order_total', 'status', 'is_ordered', 'created_at']
-    list_filter = ['status', 'is_ordered']
-    search_fields = ['order_number', 'first_name', 'last_name', 'phone', 'email']
+    list_display = ('order_number', 'full_name', 'phone', 'email', 'city', 'order_total', 'status', 'is_ordered', 'created_at')
+    list_filter = ('status', 'is_ordered')
+    search_fields = ('order_number', 'first_name', 'last_name', 'phone', 'email')
     list_per_page = 20
     inlines = [OrderProductInline]
 
 
 class PaymentAdmin(admin.ModelAdmin):
-    list_display = ['payment_id', 'amount_paid', 'status', 'created_at']
-    list_filter = ['status']
-    search_fields = ['payment_id', 'amount_paid']
+    list_display = ('payment_id', 'amount_paid', 'status', 'created_at')
+    list_filter = ('status',)
+    search_fields = ('payment_id', 'amount_paid')
     list_per_page = 20
 
 

@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.utils.html import format_html
+
 from .models import Product, Variation, ReviewRating, ProductGallery
 import admin_thumbnails
 
@@ -25,7 +27,17 @@ class ReviewRatingAdmin(admin.ModelAdmin):
     list_display = ('product', 'user', 'subject', 'rating', 'status', 'created_at')
 
 
+class ProductGalleryAdmin(admin.ModelAdmin):
+    def thumbnail(self, obj):
+        return format_html('<img src="{}" width="40"">'.format(obj.image.url))
+    thumbnail.short_description = 'Фото товара'
+    list_display = ('product', 'thumbnail')
+    list_display_links = ('product', 'thumbnail')
+    list_filter = ('product',)
+    search_fields = ('product',)
+
+
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Variation, VariationAdmin)
 admin.site.register(ReviewRating, ReviewRatingAdmin)
-admin.site.register(ProductGallery)
+admin.site.register(ProductGallery, ProductGalleryAdmin)
