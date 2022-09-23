@@ -13,6 +13,7 @@ class OrderAdmin(admin.ModelAdmin):
     list_filter = ('status', 'is_ordered')
     search_fields = ('order_number', 'first_name', 'last_name', 'phone', 'email')
     list_per_page = 20
+    list_max_show_all = 100
     inlines = [OrderProductInline]
 
 
@@ -21,6 +22,7 @@ class PaymentAdmin(admin.ModelAdmin):
     list_filter = ('status',)
     search_fields = ('payment_id', 'amount_paid')
     list_per_page = 20
+    list_max_show_all = 100
 
 
 admin.site.register(Payment, PaymentAdmin)

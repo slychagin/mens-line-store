@@ -1,6 +1,5 @@
 import json
 import uuid
-import os
 from datetime import datetime
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import EmailMessage
@@ -81,12 +80,6 @@ def payments(request):
     to_email = request.user.email
     send_email = EmailMessage(mail_subject, message, to=[to_email])
     send_email.send()
-
-    print(payment_data['metadata']['orderNumber'])
-    print(request.user.last_name)
-    print(request.user.first_name)
-    print(request.user.email)
-    print(request.user.phone_number)
 
     # Send message to Telegram chat
     send_telegram(order_number=payment_data['metadata']['orderNumber'],

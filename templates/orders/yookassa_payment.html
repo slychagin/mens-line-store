@@ -1,6 +1,15 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
+
+<!-- Preloader -->
+<div class="preloader">
+  <div class="preloader__row">
+    <div class="preloader__item"></div>
+    <div class="preloader__item"></div>
+  </div>
+</div>
 
 <div id="payment-form"></div>
 
@@ -60,6 +69,7 @@ checkout.on('complete', () => {
           }),
         })
          .then((response) => response.json())
+
          .then((data) => {
             window.location.href = redirect_url + '?order_number=' + data.order_number + '&payment_id=' + data.transID;
          });

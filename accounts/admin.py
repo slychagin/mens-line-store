@@ -9,6 +9,8 @@ class AccountAdmin(UserAdmin):
     list_display_links = ('email', 'first_name', 'last_name')
     readonly_fields = ('last_login', 'date_joined')
     ordering = ['-date_joined']
+    list_per_page = 20
+    list_max_show_all = 100
 
     filter_horizontal = ()
     list_filter = ()
@@ -21,6 +23,8 @@ class UserProfileAdmin(admin.ModelAdmin):
     thumbnail.short_description = 'Фото профиля'
     list_display = ('thumbnail', 'user', 'city', 'region', 'country')
     list_display_links = ('user', 'thumbnail')
+    list_per_page = 20
+    list_max_show_all = 100
 
 
 admin.site.register(Account, AccountAdmin)
