@@ -13,6 +13,7 @@ from orders.forms import OrderForm
 from orders.models import Order, Payment, OrderProduct
 from yookassa import Configuration, Payment as PayKassa
 from store.models import Product
+from telebot.sendmessage import send_telegram
 
 
 # YOOKASSA PAYMENT
@@ -80,6 +81,19 @@ def payments(request):
     to_email = request.user.email
     send_email = EmailMessage(mail_subject, message, to=[to_email])
     send_email.send()
+
+    print(payment_data['metadata']['orderNumber'])
+    print(request.user.last_name)
+    print(request.user.first_name)
+    print(request.user.email)
+    print(request.user.phone_number)
+
+    # Send message to Telegram chat
+    send_telegram(order_number=payment_data['metadata']['orderNumber'],
+                  last_name=request.user.last_name,
+                  first_name=request.user.first_name,
+                  email=request.user.email,
+                  phone_number=request.user.phone_number)
 
     # Send order number and transaction id back to sendData method via JSONResponse
     data = {

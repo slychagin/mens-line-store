@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'carts',
     'orders',
     'slider',
-    'admin_honeypot'
+    'admin_honeypot',
+    'telebot'
 ]
 
 MIDDLEWARE = [
