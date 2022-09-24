@@ -3,7 +3,6 @@ from django.db.models import Avg, Count
 from django.urls import reverse
 from accounts.models import Account
 from category.models import Category
-from django.utils.translation import gettext_lazy as _
 
 
 class Product(models.Model):

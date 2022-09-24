@@ -11,6 +11,20 @@ from .forms import ReviewForm
 from .models import Product, ReviewRating, ProductGallery
 
 
+def paginator(request, product_list, products_per_page):
+    """
+    Paginate pages in the store
+    :param request:
+    :param product_list: List of all products in the store or in the category
+    :param products_per_page: How many products per page show
+    :return: Number of products displayed
+    """
+    product_paginator = Paginator(product_list, products_per_page)
+    page = request.GET.get('page')
+    paged_products = product_paginator.get_page(page)
+    return paged_products
+
+
 def store(request, category_slug=None):
     """
     Render 'store' page where show all products or products by category in sale.
@@ -23,17 +37,20 @@ def store(request, category_slug=None):
 
     if category_slug is not None:
         categories = get_object_or_404(Category, slug=category_slug)
-        products = Product.objects.filter(category=categories, is_available=True)
-        paged_products = paginator(request, products, 1)
+        products = Product.objects.filter(category=categories, is_available=True).order_by('id')
+        paged_products = paginator(request, products, 3)
         product_count = products.count()
     else:
         products = Product.objects.all().filter(is_available=True).order_by('id')
         paged_products = paginator(request, products, 3)
         product_count = products.count()
 
+    all_products_count = Product.objects.all().count()
+
     context = {
         'products': paged_products,
         'product_count': product_count,
+        'all_products_count': all_products_count
     }
     return render(request, 'store/store.html', context)
 
@@ -68,20 +85,6 @@ def product_detail(request, category_slug, product_slug):
     }
 
     return render(request, 'store/product_detail.html', context)
-
-
-def paginator(request, product_list, products_per_page):
-    """
-    Paginate pages in the store
-    :param request:
-    :param product_list: List of all products in the store or in the category
-    :param products_per_page: How many products per page show
-    :return: Number of products displayed
-    """
-    product_paginator = Paginator(product_list, products_per_page)
-    page = request.GET.get('page')
-    paged_products = product_paginator.get_page(page)
-    return paged_products
 
 
 def search(request):

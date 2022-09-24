@@ -56,6 +56,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_session_timeout.middleware.SessionTimeoutMiddleware',
 ]
+
 # Logout from session after 7200 seconds
 # SESSION_EXPIRE_SECONDS = 7200
 # SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True

@@ -2,7 +2,7 @@ import requests
 from telebot.models import TeleSettings
 
 
-def send_telegram(order_number, last_name, first_name, email, phone_number):
+def send_telegram(order_number,total_sum, last_name, first_name, email, phone_number):
     settings = TeleSettings.objects.get(pk=1)
     if settings:
         token = str(settings.tg_token)
@@ -12,7 +12,11 @@ def send_telegram(order_number, last_name, first_name, email, phone_number):
         api = 'https://api.telegram.org/bot'
         method = api + token + '/sendMessage'
 
-        text_message = text.replace('{order_number}', order_number).replace('{full_name}', f'{last_name} {first_name}').replace('{email}', email).replace('{phone_number}', phone_number)
+        text_message = text.replace('{order_number}', order_number).\
+            replace('{total_sum}', str(total_sum)).\
+            replace('{full_name}', f'{last_name} {first_name}').\
+            replace('{email}', email).\
+            replace('{phone_number}', phone_number)
 
         try:
             req = requests.post(method, data={

@@ -83,6 +83,7 @@ def payments(request):
 
     # Send message to Telegram chat
     send_telegram(order_number=payment_data['metadata']['orderNumber'],
+                  total_sum=order.order_total,
                   last_name=request.user.last_name,
                   first_name=request.user.first_name,
                   email=request.user.email,

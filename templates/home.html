@@ -6,11 +6,11 @@
 <section class="section-intro padding-y-sm">
     <div class="container">
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-                {% for slide in slider_list %}
-                <li data-target="#carouselExampleIndicators" data-slide-to="{{slide.id}}" class="{{slide.slider_css}}"></li>
-                {% endfor %}
-            </ol>
+<!--            <ol class="carousel-indicators">-->
+<!--                {% for slide in slider_list %}-->
+<!--                <li data-target="#carouselExampleIndicators" data-slide-to="{{slide.id}}" class="{{slide.slider_css}}"></li>-->
+<!--                {% endfor %}-->
+<!--            </ol>-->
             <div class="carousel-inner img-fluid rounded">
                 {% for slide in slider_list %}
                 <div class="carousel-item {{slide.slider_css}}">
