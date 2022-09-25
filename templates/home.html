@@ -46,7 +46,7 @@
 
 
         <div class="row">
-            {% for product in products %}
+            {% for product in most_popular_products %}
             <div class="col-md-3">
                 <div class="card card-product-grid">
                     <a href="{{ product.get_url }}" class="img-wrap"> <img src="{{ product.product_image.url }}"> </a>
