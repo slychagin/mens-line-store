@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator
-from django.db.models import Q
+from django.db.models import Q, Max, Min
 from django.shortcuts import render, get_object_or_404, redirect
 from carts.models import CartItem
 from carts.views import _cart_id
@@ -35,22 +35,49 @@ def store(request, category_slug=None):
     categories = None
     products = None
 
+    # Sidebar panel (products amount, price range)
+    all_products_count = Product.objects.all().count()
+    max_price_placeholder = Product.objects.aggregate(Max('price'))['price__max']
+    min_price_placeholder = Product.objects.aggregate(Min('price'))['price__min']
+
     if category_slug is not None:
         categories = get_object_or_404(Category, slug=category_slug)
-        products = Product.objects.filter(category=categories, is_available=True).order_by('id')
-        paged_products = paginator(request, products, 3)
-        product_count = products.count()
+        if 'min_price' in request.GET:
+            min_price = request.GET.get('min_price')
+            max_price = request.GET.get('max_price')
+            if min_price == '':
+                min_price = 0
+            if max_price == '':
+                max_price = Product.objects.aggregate(Max('price'))['price__max']
+            products = Product.objects.filter(price__range=(min_price, max_price), category=categories, is_available=True).order_by('id')
+            paged_products = paginator(request, products, 3)
+            product_count = products.count()
+        else:
+            products = Product.objects.filter(category=categories, is_available=True).order_by('id')
+            paged_products = paginator(request, products, 3)
+            product_count = products.count()
     else:
-        products = Product.objects.all().filter(is_available=True).order_by('id')
-        paged_products = paginator(request, products, 3)
-        product_count = products.count()
-
-    all_products_count = Product.objects.all().count()
+        if 'min_price' in request.GET:
+            min_price = request.GET.get('min_price')
+            max_price = request.GET.get('max_price')
+            if min_price == '':
+                min_price = 0
+            if max_price == '':
+                max_price = Product.objects.aggregate(Max('price'))['price__max']
+            products = Product.objects.all().filter(is_available=True, price__range=(min_price, max_price)).order_by('id')
+            paged_products = paginator(request, products, 3)
+            product_count = products.count()
+        else:
+            products = Product.objects.all().filter(is_available=True).order_by('id')
+            paged_products = paginator(request, products, 3)
+            product_count = products.count()
 
     context = {
         'products': paged_products,
         'product_count': product_count,
-        'all_products_count': all_products_count
+        'all_products_count': all_products_count,
+        'max_price_placeholder': max_price_placeholder,
+        'min_price_placeholder': min_price_placeholder
     }
     return render(request, 'store/store.html', context)
 
@@ -83,7 +110,6 @@ def product_detail(request, category_slug, product_slug):
         'reviews': reviews,
         'product_gallery': product_gallery
     }
-
     return render(request, 'store/product_detail.html', context)
 
 
