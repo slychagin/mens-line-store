@@ -4,7 +4,6 @@
 
 {% block content %}
 
-<!-- ========================= SECTION PAGETOP ========================= -->
 <section class="section-pagetop bg">
     <div class="container">
         {% if 'search' in request.path %}
@@ -13,11 +12,9 @@
         <h2 class="title-page">Наш магазин</h2>
         {% endif %}
 
-    </div> <!-- container //  -->
+    </div>
 </section>
-<!-- ========================= SECTION INTRO END// ========================= -->
 
-<!-- ========================= SECTION CONTENT ========================= -->
 <section class="section-content padding-y">
     <div class="container">
 
@@ -46,9 +43,9 @@
                                     {% endfor %}
                                 </ul>
 
-                            </div> <!-- card-body.// -->
+                            </div>
                         </div>
-                    </article> <!-- filter-group  .// -->
+                    </article>
 
                     <article class="filter-group">
                         <header class="card-header">
@@ -71,17 +68,17 @@
                                             <input class="form-control" placeholder="до {{max_price_placeholder}}"
                                                    type="number" name="max_price">
                                         </div>
-                                    </div> <!-- form-row.// -->
+                                    </div>
                                     <button type="submit" class="btn btn-block btn-primary">Применить</button>
                                 </div>
 
                             </div>
                         </form>
-                    </article> <!-- filter-group .// -->
+                    </article>
 
-                </div> <!-- card.// -->
+                </div>
 
-            </aside> <!-- col.// -->
+            </aside>
             <main class="col-md-9">
 
                 <header class="border-bottom mb-4 pb-3">
@@ -89,7 +86,7 @@
                         <span class="mr-md-auto"><b>{{ product_count }}</b> items found</span>
 
                     </div>
-                </header><!-- sect-heading -->
+                </header>
 
                 <div class="row">
                     {% if products %}
@@ -100,18 +97,18 @@
 
                                 <a href="{{ product.get_url }}"><img src="{{ product.product_image.url }}"></a>
 
-                            </div> <!-- img-wrap.// -->
+                            </div>
                             <figcaption class="info-wrap">
                                 <div class="fix-height">
                                     <a href="{{ product.get_url }}" class="title">{{ product.product_name }}</a>
                                     <div class="price-wrap mt-2">
                                         <span class="price">{{ product.price }} ₽</span>
-                                    </div> <!-- price-wrap.// -->
+                                    </div>
                                 </div>
                                 <a href="{{ product.get_url }}" class="btn btn-block btn-primary">Посмотреть детали</a>
                             </figcaption>
                         </figure>
-                    </div> <!-- col.// -->
+                    </div>
                     {% endfor %}
                     {% else %}
                     <div>
@@ -119,7 +116,7 @@
                         <h2>Пожалуйста, попробуйте еще раз.</h2>
                     </div>
                     {% endif %}
-                </div> <!-- row end.// -->
+                </div>
 
                 <nav class="mt-4" aria-label="Page navigation sample">
                     {% if products.has_other_pages %}
@@ -153,12 +150,12 @@
                     {% endif %}
                 </nav>
 
-            </main> <!-- col.// -->
+            </main>
 
         </div>
 
-    </div> <!-- container .//  -->
+    </div>
 </section>
-<!-- ========================= SECTION CONTENT END// ========================= -->
+
 
 {% endblock %}

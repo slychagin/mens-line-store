@@ -61,12 +61,10 @@
                                 <label for="">Примечание к заказу</label>
                                 <textarea name="order_note" rows="2" class="form-control"></textarea>
                             </div>
-
-
                     </div>
-                </div> <!-- card.// -->
+                </div>
 
-            </aside> <!-- col.// -->
+            </aside>
             <aside class="col-lg-6">
 
                 <div class="card">
@@ -107,7 +105,7 @@
                                     <div class="price-wrap">
                                         <var class="price">{{ cart_item.sub_total }} ₽</var>
                                         <small class="text-muted"> {{ cart_item.product.price }} ₽ за шт. </small>
-                                    </div> <!-- price-wrap .// -->
+                                    </div>
                                 </td>
                             </tr>
                             {% endfor %}
@@ -117,13 +115,11 @@
                         <button type="submit" name="submit" class="btn btn-primary btn-block">Разместить заказ</button>
                         <a href="{% url 'store' %}" class="btn btn-light btn-block">Продолжить покупки</a>
                         </form>
-                    </div> <!-- card-body.// -->
-                </div> <!-- card.// -->
-            </aside> <!-- col.// -->
-
-        </div> <!-- row.// -->
-
-    </div> <!-- container .//  -->
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
 </section>
 
 

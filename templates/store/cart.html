@@ -6,7 +6,6 @@
 <section class="section-content padding-y bg">
     <div class="container">
 
-        <!-- ============================ COMPONENT 1 ================================= -->
         {% if not cart_items %}
         <div class="text-center">
             <h2>Ваша корзина пуста</h2>
@@ -47,7 +46,7 @@
                                 </figure>
                             </td>
                             <td>
-                                <!-- col.// -->
+
                                 <div class="col">
                                     <div class="input-group input-spinner">
                                         <div class="input-group-prepend">
@@ -64,14 +63,14 @@
                                                 <button class="btn btn-light" type="submit" id="button-minus"> <i class="fa fa-plus"></i> </button>
                                             </form>
                                         </div>
-                                    </div> <!-- input-group.// -->
-                                </div> <!-- col.// -->
+                                    </div>
+                                </div>
                             </td>
                             <td>
                                 <div class="price-wrap">
                                     <var class="price">{{ cart_item.sub_total }} ₽</var>
                                     <small class="text-muted"> {{ cart_item.product.price }} ₽ за шт. </small>
-                                </div> <!-- price-wrap .// -->
+                                </div>
                             </td>
                             <td class="text-right">
                                 <a href="{% url 'remove_cart_item' cart_item.product.id cart_item.id %}"
@@ -80,19 +79,15 @@
                             </td>
                         </tr>
                         {% endfor %}
-
                         </tbody>
-
                     </table>
-
 
                     <p style="text-indent: 30px" class="text-muted small"><sup>*</sup>Скидка рассчитывается от объема
                         заказа: при сумме заказа до 5000 руб. - 3%, от 5000 руб. и выше - 7% </p>
 
+                </div>
 
-                </div> <!-- card.// -->
-
-            </aside> <!-- col.// -->
+            </aside>
             <aside class="col-lg-3">
 
                 <div class="card">
@@ -115,17 +110,12 @@
                         </p>
                         <a href="{% url 'checkout' %}" class="btn btn-primary btn-block"> Оформить заказ </a>
                         <a href="{% url 'store' %}" class="btn btn-light btn-block">Продолжить покупки</a>
-                    </div> <!-- card-body.// -->
-                </div> <!-- card.// -->
-
-            </aside> <!-- col.// -->
-
-
-        </div> <!-- row.// -->
-        <!-- ============================ COMPONENT 1 END .// ================================= -->
+                    </div>
+                </div>
+            </aside>
+        </div>
         {% endif %}
-    </div> <!-- container .//  -->
+    </div>
 </section>
-<!-- ========================= SECTION CONTENT END// ========================= -->
 
 {% endblock %}

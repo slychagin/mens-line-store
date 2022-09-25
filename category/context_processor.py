@@ -11,5 +11,4 @@ def menu_links(request):
     """
     links = Category.objects.all().order_by('category_name')
     count_products_by_category = [len(Product.objects.filter(category=link, is_available=True)) for link in links]
-
     return dict(links=links, count_products_by_category=count_products_by_category)

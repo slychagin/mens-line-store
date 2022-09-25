@@ -19,12 +19,12 @@
                         <a href="#" class="nav-link">8(863)700-70-70</a>
                     </li>
                 </ul>
-<!--                <ul class="navbar-nav">-->
-<!--                    <li><a href="#" class="nav-link">О нас</a></li>-->
-<!--                    <li><a href="#" class="nav-link">Оплата</a></li>-->
-<!--                    <li><a href="#" class="nav-link">Доставка</a></li>-->
-<!--                    <li><a href="#" class="nav-link">Контакты</a></li>-->
-<!--                </ul>-->
+                <!--                <ul class="navbar-nav">-->
+                <!--                    <li><a href="#" class="nav-link">О нас</a></li>-->
+                <!--                    <li><a href="#" class="nav-link">Оплата</a></li>-->
+                <!--                    <li><a href="#" class="nav-link">Доставка</a></li>-->
+                <!--                    <li><a href="#" class="nav-link">Контакты</a></li>-->
+                <!--                </ul>-->
             </div>
         </div>
     </nav>
@@ -35,7 +35,7 @@
                 <div class="col-lg-2 col-md-3 col-6">
                     <a href="{% url 'home' %}" class="brand-wrap">
                         <img class="logo" src="{% static './images/logo.png' %}">
-                    </a> <!-- brand-wrap.// -->
+                    </a>
                 </div>
                 <div class="col-lg col-sm col-md col-6 flex-grow-0">
                     <div class="category-wrap dropdown d-inline-block float-right">
@@ -48,14 +48,15 @@
                             <a class="dropdown-item" href="{{ category.get_url }}">{{ category.category_name }}</a>
                             {% endfor %}
                         </div>
-                    </div>  <!-- category-wrap.// -->
-                </div> <!-- col.// -->
+                    </div>
+                </div>
                 <a href="{% url 'store' %}" class="btn btn-outline-primary">Магазин</a>
 
                 <div class="col-lg  col-md-6 col-sm-12 col">
                     <form action="{% url 'search' %}" class="search" method="GET">
                         <div class="input-group w-100">
-                            <input type="text" class="form-control" style="width:60%;" placeholder="Поиск" name="keyword">
+                            <input type="text" class="form-control" style="width:60%;" placeholder="Поиск"
+                                   name="keyword">
 
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="submit">
@@ -63,8 +64,8 @@
                                 </button>
                             </div>
                         </div>
-                    </form> <!-- search-wrap .end// -->
-                </div> <!-- col.// -->
+                    </form>
+                </div>
 
                 <div class="col-lg-3 col-sm-6 col-8 order-2 order-lg-3">
                     <div class="d-flex justify-content-end mb-3 mb-lg-0">
@@ -89,10 +90,10 @@
                             <div class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></div>
                             <span class="badge badge-pill badge-danger notify">{{ cart_count }}</span>
                         </a>
-                    </div> <!-- widgets-wrap.// -->
-                </div> <!-- col.// -->
-            </div> <!-- row.// -->
-        </div> <!-- container.// -->
-    </section> <!-- header-main .// -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-</header> <!-- section-header.// -->
+</header>

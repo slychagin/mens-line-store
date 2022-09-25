@@ -6,16 +6,16 @@
 <section class="section-content padding-y bg">
 <div class="container">
 
-<!-- ============================ COMPONENT 1 ================================= -->
+
 <div class="card">
 	<div class="row no-gutters">
 		<aside class="col-md-6">
 <article class="gallery-wrap">
 	<div class="img-big-wrap mainImage">
 	   <center><img src="{{ single_product.product_image.url }}"></center>
-	</div> <!-- img-big-wrap.// -->
+	</div>
 
-</article> <!-- gallery-wrap .end// -->
+</article>
 			<ul class="thumb">
 				<li>
 					<a href="{{ single_product.product_image.url }}" target="mainImage"><img src="{{ single_product.product_image.url }}" alt="Фото товара"></a>
@@ -82,17 +82,11 @@
 		<button type="submit" class="btn btn-primary"> <span class="text">Купить</span> <i class="fas fa-shopping-cart"></i>  </button>
 		{% endif %}
 
-<!--		{% if not in_cart %}-->
-<!--				<button type="submit" class="btn btn-primary"> <span class="text">Купить</span> <i class="fas fa-shopping-cart"></i>  </button>-->
-<!--			{% else %}-->
-<!--				<a href="{% url 'cart' %}" class="btn btn-outline-success"> <span class="text">В корзине</span> <i class="fas fa-check"></i>  </a>-->
-<!--			{% endif %}-->
-	</article> <!-- product-info-aside .// -->
+	</article>
 	</form>
-		</main> <!-- col.// -->
-	</div> <!-- row.// -->
-</div> <!-- card.// -->
-<!-- ============================ COMPONENT 1 END .// ================================= -->
+		</main>
+	</div>
+</div>
 
 <br>
 
@@ -172,7 +166,7 @@
 					</span>
 				</div>
 			</div>
-		</div> <!-- icontext.// -->
+		</div>
 		<div class="mt-3">
 			<h6>{{ review.subject }}</h6>
 			<p>{{ review.review }}</p>
@@ -180,11 +174,11 @@
 	</article>
 	{% endfor %}
 
-	</div> <!-- col.// -->
-</div> <!-- row.// -->
+	</div>
+</div>
 
 
-</div> <!-- container .//  -->
+</div>
 </section>
 
 {% endblock %}

@@ -7,4 +7,3 @@ class OrderForm(forms.ModelForm):
         model = Order
         fields = ['first_name', 'last_name', 'phone', 'email', 'address_line_1',
                   'address_line_2', 'country', 'region', 'city', 'order_note']
-
