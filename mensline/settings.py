@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'orders',
     'slider',
     'admin_honeypot',
-    'telebot'
+    'telebot',
+    'storages'
 ]
 
 MIDDLEWARE = [
