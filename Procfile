@@ -1,0 +1,1 @@
+web: gunicorn mensline.wsgi --log-file -
