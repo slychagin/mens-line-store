@@ -184,4 +184,5 @@ DROPBOX_APP_SECRET = config('DROPBOX_APP_SECRET')
 AUTHORIZATION_KEY = config('AUTHORIZATION_KEY')
 dbx = dropbox.Dropbox(DROPBOX_OAUTH2_TOKEN)
 
+# Email fo errors when DEBUG = False
 ADMINS = [('Sergey', 'serg.programmer777@gmail.com')]

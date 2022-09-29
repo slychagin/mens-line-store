@@ -66,6 +66,8 @@ def place_order(request, total=0, quantity=0):
             data.save()
 
             order = Order.objects.get(user=current_user, is_ordered=False, order_number=order_number)
+            order_number = order.order_number
+
             context = {
                 'order': order,
                 'cart_items': cart_items,
@@ -79,11 +81,16 @@ def place_order(request, total=0, quantity=0):
 
 
 def yookassa_payment(request):
+    global order_number
     Configuration.account_id = settings.YOOKASSA_SHOP_ID
     Configuration.secret_key = settings.YOOKASSA_SECRET_KEY
 
     current_user = request.user
-    order = Order.objects.get(user=current_user, is_ordered=False, order_number=order_number)
+
+    try:
+        order = Order.objects.get(user=current_user, is_ordered=False, order_number=order_number)
+    except ObjectDoesNotExist:
+        pass
 
     payment = PayKassa.create(
         {
