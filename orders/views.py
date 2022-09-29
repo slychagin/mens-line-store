@@ -89,40 +89,39 @@ def yookassa_payment(request):
 
     try:
         order = Order.objects.get(user=current_user, is_ordered=False, order_number=order_number)
-    except ObjectDoesNotExist:
-        pass
-
-    payment = PayKassa.create(
-        {
-            'amount': {
-                'value': order.order_total,
-                'currency': 'RUB'
-            },
-            'confirmation': {
-                'type': 'embedded',
-            },
-            'capture': True,
-            'description': f'Заказ №{order_number}',
-            'metadata': {
-                'orderNumber': order_number
-            },
-            'receipt': {
-                'customer': {
-                    'full_name': f'{order.last_name} {order.first_name}',
-                    'email': order.email,
-                    'phone': order.phone,
+        payment = PayKassa.create(
+            {
+                'amount': {
+                    'value': order.order_total,
+                    'currency': 'RUB'
                 },
-            }
-        }, uuid.uuid4())
+                'confirmation': {
+                    'type': 'embedded',
+                },
+                'capture': True,
+                'description': f'Заказ №{order_number}',
+                'metadata': {
+                    'orderNumber': order_number
+                },
+                'receipt': {
+                    'customer': {
+                        'full_name': f'{order.last_name} {order.first_name}',
+                        'email': order.email,
+                        'phone': order.phone,
+                    },
+                }
+            }, uuid.uuid4())
 
-    payment_object = json.loads(payment.json())
+        payment_object = json.loads(payment.json())
 
-    context = {
-        'confirmation_token': payment_object['confirmation']['confirmation_token'],
-        'transaction_id': payment_object['id'],
-        'order_number': order.order_number,
-    }
-    return render(request, 'orders/yookassa_payment.html', context)
+        context = {
+            'confirmation_token': payment_object['confirmation']['confirmation_token'],
+            'transaction_id': payment_object['id'],
+            'order_number': order.order_number,
+        }
+        return render(request, 'orders/yookassa_payment.html', context)
+    except ObjectDoesNotExist:
+        return redirect('yookassa_payment')
 
 
 def payments(request):
