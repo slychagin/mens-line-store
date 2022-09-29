@@ -176,7 +176,7 @@ EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
 YOOKASSA_SECRET_KEY = config('YOOKASSA_SECRET_KEY')
 YOOKASSA_SHOP_ID = config('YOOKASSA_SHOP_ID')
 
-# Dropbox connecting
+# # Dropbox connecting
 DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
 DROPBOX_OAUTH2_TOKEN = config('DROPBOX_OAUTH2_TOKEN')
 DROPBOX_APP_KEY = config('DROPBOX_APP_KEY')
