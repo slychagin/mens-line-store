@@ -18,7 +18,7 @@ class Payment(models.Model):
         return self.payment_id
 
     class Meta:
-        verbose_name = 'Оплата'
+        verbose_name = 'Оплату'
         verbose_name_plural = 'Оплаты'
 
 
