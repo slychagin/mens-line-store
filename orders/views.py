@@ -176,7 +176,6 @@ def yookassa_payment(request):
             },
             'confirmation': {
                 'type': 'embedded',
-                'return_url': 'http://127.0.0.1:8000/'
             },
             'capture': True,
             'description': f'Заказ №{order_number}',

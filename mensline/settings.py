@@ -174,12 +174,13 @@ EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
 
 # YOOKASSA PAYMENT
 YOOKASSA_SECRET_KEY = config('YOOKASSA_SECRET_KEY')
-YOOKASSA_SHOP_ID = config('YOOKASSA_SHOP_ID', cast=int)
+YOOKASSA_SHOP_ID = config('YOOKASSA_SHOP_ID')
 
 # Dropbox connecting
-# DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
-# DROPBOX_OAUTH2_TOKEN = config('DROPBOX_OAUTH2_TOKEN')
-# DROPBOX_APP_KEY = config('DROPBOX_APP_KEY')
-# DROPBOX_APP_SECRET = config('DROPBOX_APP_SECRET')
-# AUTHORIZATION_KEY = config('AUTHORIZATION_KEY')
-# dbx = dropbox.Dropbox(DROPBOX_OAUTH2_TOKEN)
+if not DEBUG:
+    DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
+    DROPBOX_OAUTH2_TOKEN = config('DROPBOX_OAUTH2_TOKEN')
+    DROPBOX_APP_KEY = config('DROPBOX_APP_KEY')
+    DROPBOX_APP_SECRET = config('DROPBOX_APP_SECRET')
+    AUTHORIZATION_KEY = config('AUTHORIZATION_KEY')
+    dbx = dropbox.Dropbox(DROPBOX_OAUTH2_TOKEN)
