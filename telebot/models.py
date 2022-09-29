@@ -12,5 +12,5 @@ class TeleSettings(models.Model):
         return self.tg_chat
 
     class Meta:
-        verbose_name = 'Настройка'
+        verbose_name = 'Настройку'
         verbose_name_plural = 'Настройки'

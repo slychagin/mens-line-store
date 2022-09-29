@@ -12,7 +12,7 @@ class Cart(models.Model):
         return self.cart_id
 
     class Meta:
-        verbose_name = 'Корзина'
+        verbose_name = 'Корзину'
         verbose_name_plural = 'Корзины'
 
 

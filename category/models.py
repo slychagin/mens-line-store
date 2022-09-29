@@ -11,7 +11,7 @@ class Category(models.Model):
     cat_image = models.ImageField(upload_to='photos/categories', blank=True, verbose_name='Фото категории')
 
     class Meta:
-        verbose_name = 'Категория'
+        verbose_name = 'Категорию'
         verbose_name_plural = 'Категории'
 
     def get_url(self):

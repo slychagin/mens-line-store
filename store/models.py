@@ -75,7 +75,7 @@ class Variation(models.Model):
         return self.variation_value
 
     class Meta:
-        verbose_name = 'Вариация'
+        verbose_name = 'Вариацию'
         verbose_name_plural = 'Вариации'
 
 
@@ -96,7 +96,7 @@ class ReviewRating(models.Model):
         return self.subject
 
     class Meta:
-        verbose_name = 'Отзыв и оценка'
+        verbose_name = 'Отзыв и оценку'
         verbose_name_plural = 'Отзывы и оценки'
 
 
@@ -110,4 +110,5 @@ class ProductGallery(models.Model):
         return self.product.product_name
 
     class Meta:
+        verbose_name = 'товар'
         verbose_name_plural = 'Галерея товаров'
