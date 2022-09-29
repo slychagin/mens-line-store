@@ -27,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['menslinestore.herokuapp.com', '127.0.0.1']
 
 # Application definition
 
@@ -183,3 +183,5 @@ DROPBOX_APP_KEY = config('DROPBOX_APP_KEY')
 DROPBOX_APP_SECRET = config('DROPBOX_APP_SECRET')
 AUTHORIZATION_KEY = config('AUTHORIZATION_KEY')
 dbx = dropbox.Dropbox(DROPBOX_OAUTH2_TOKEN)
+
+ADMINS = [('Sergey', 'serg.programmer777@gmail.com')]
