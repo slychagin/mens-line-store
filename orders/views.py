@@ -176,6 +176,7 @@ def yookassa_payment(request):
             },
             'confirmation': {
                 'type': 'embedded',
+                'return_url': 'https://menslinestore.herokuapp.com/'
             },
             'capture': True,
             'description': f'Заказ №{order_number}',
