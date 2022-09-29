@@ -3,15 +3,7 @@
 
 {% block content %}
 
-<!-- Preloader -->
-<div class="preloader">
-  <div class="preloader__row">
-    <div class="preloader__item"></div>
-    <div class="preloader__item"></div>
-  </div>
-</div>
 
-<div id="payment-form"></div>
 
 <script>
 function getCookie(name) {
@@ -83,5 +75,16 @@ checkout.render('payment-form')
 .then(() => {});
 
 </script>
+
+
+<!-- Preloader -->
+<div class="preloader">
+  <div class="preloader__row">
+    <div class="preloader__item"></div>
+    <div class="preloader__item"></div>
+  </div>
+</div>
+
+<div id="payment-form"></div>
 
 {% endblock %}
