@@ -1,10 +1,11 @@
 import requests
+from django.core.exceptions import ObjectDoesNotExist
 from telebot.models import TeleSettings
 
 
-def send_telegram(order_number,total_sum, last_name, first_name, email, phone_number):
-    settings = TeleSettings.objects.get(pk=1)
-    if settings:
+def send_telegram(order_number, total_sum, last_name, first_name, email, phone_number):
+    try:
+        settings = TeleSettings.objects.get(pk=2)
         token = str(settings.tg_token)
         chat_id = str(settings.tg_chat)
         text = str(settings.tg_message)
@@ -32,5 +33,5 @@ def send_telegram(order_number,total_sum, last_name, first_name, email, phone_nu
                 print('Ошибка 500')
             else:
                 pass
-    else:
+    except ObjectDoesNotExist:
         pass
