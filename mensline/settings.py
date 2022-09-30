@@ -178,11 +178,11 @@ YOOKASSA_SHOP_ID = config('YOOKASSA_SHOP_ID')
 
 # Dropbox connecting
 DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
-DROPBOX_OAUTH2_TOKEN = config('DROPBOX_OAUTH2_TOKEN')
+DROPBOX_OAUTH2_REFRESH_TOKEN = config('DROPBOX_OAUTH2_REFRESH_TOKEN')
 DROPBOX_APP_KEY = config('DROPBOX_APP_KEY')
 DROPBOX_APP_SECRET = config('DROPBOX_APP_SECRET')
 AUTHORIZATION_KEY = config('AUTHORIZATION_KEY')
-dbx = dropbox.Dropbox(DROPBOX_OAUTH2_TOKEN)
+dbx = dropbox.Dropbox(DROPBOX_OAUTH2_REFRESH_TOKEN)
 
 # Email fo errors when DEBUG = False
 ADMINS = [('Sergey', 'serg.programmer777@gmail.com')]
