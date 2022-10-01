@@ -12,6 +12,7 @@ class ProductGalleryInline(admin.TabularInline):
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('product_name', 'price', 'stock', 'category', 'modified_date', 'is_available')
+    search_fields = ('product_name', 'category__category_name')
     list_per_page = 20
     list_max_show_all = 100
     prepopulated_fields = {"slug": ("product_name",)}
@@ -22,12 +23,14 @@ class VariationAdmin(admin.ModelAdmin):
     list_display = ('product', 'variation_category', 'variation_value', 'is_active')
     list_editable = ('is_active',)
     list_filter = ('product', 'variation_category', 'variation_value')
-    list_per_page = 20
+    search_fields = ('product__product_name',)
+    list_per_page = 50
     list_max_show_all = 100
 
 
 class ReviewRatingAdmin(admin.ModelAdmin):
     list_display = ('product', 'user', 'subject', 'rating', 'status', 'created_at')
+    search_fields = ('product__product_name',)
     list_per_page = 20
     list_max_show_all = 100
 
@@ -40,7 +43,7 @@ class ProductGalleryAdmin(admin.ModelAdmin):
     list_display = ('product', 'thumbnail')
     list_display_links = ('product', 'thumbnail')
     list_filter = ('product',)
-    search_fields = ('product',)
+    search_fields = ('product__product_name',)
     list_per_page = 20
     list_max_show_all = 100
 

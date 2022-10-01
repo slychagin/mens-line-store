@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator
 from django.db.models import Q, Max, Min
+from django.db.models.functions import Lower
 from django.shortcuts import render, get_object_or_404, redirect
 from carts.models import CartItem
 from carts.views import _cart_id
@@ -50,11 +51,11 @@ def store(request, category_slug=None):
             if max_price == '':
                 max_price = Product.objects.aggregate(Max('price'))['price__max']
             products = Product.objects.filter(price__range=(min_price, max_price), category=categories, is_available=True).order_by('id')
-            paged_products = paginator(request, products, 3)
+            paged_products = paginator(request, products, 6)
             product_count = products.count()
         else:
             products = Product.objects.filter(category=categories, is_available=True).order_by('id')
-            paged_products = paginator(request, products, 3)
+            paged_products = paginator(request, products, 6)
             product_count = products.count()
     else:
         if 'min_price' in request.GET:
@@ -65,11 +66,11 @@ def store(request, category_slug=None):
             if max_price == '':
                 max_price = Product.objects.aggregate(Max('price'))['price__max']
             products = Product.objects.all().filter(is_available=True, price__range=(min_price, max_price)).order_by('id')
-            paged_products = paginator(request, products, 3)
+            paged_products = paginator(request, products, 6)
             product_count = products.count()
         else:
             products = Product.objects.all().filter(is_available=True).order_by('id')
-            paged_products = paginator(request, products, 3)
+            paged_products = paginator(request, products, 6)
             product_count = products.count()
 
     context = {
@@ -125,12 +126,13 @@ def search(request):
     if 'keyword' in request.GET:
         keyword = request.GET['keyword']
         if keyword:
-            products = Product.objects.order_by('-created_date').filter(
-                Q(description__icontains=keyword) | Q(product_name__icontains=keyword))
+            products = Product.objects.order_by(
+                '-created_date').filter(Q(product_name__icontains=keyword) |
+                                        Q(description__icontains=keyword))
             if 'keyword' in request.GET and request.GET['keyword']:
                 page = request.GET.get('page')
                 keyword = request.GET['keyword']
-                paginator = Paginator(products, 3)
+                paginator = Paginator(products, 6)
             paged_products = paginator.get_page(page)
             product_count = products.count()
 
