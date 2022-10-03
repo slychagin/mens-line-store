@@ -51,7 +51,7 @@
                                         <tbody>
                                             {% for item in order_details %}
                                             <tr>
-                                                <td>{{ item.product.product_name }}
+                                                <td><a href="{{ item.product.get_url }}">{{ item.product.product_name }}</a>
                                                     <p class="text-muted small">
                                                     {% if item.variations.all %}
                                                     {% for i in item.variations.all %}
