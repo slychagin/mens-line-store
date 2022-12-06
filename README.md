@@ -1,7 +1,5 @@
 # Интернет-магазин MensLine
 ### e-Commerce написанный на Python и Django Framework.
-#### Деплой на Heroku: https://menslinestore.herokuapp.com/
-
 
 В качестве фронтэнда использован шаблон интернет-магазина на Bootstrap.
 Бэкэнд реализован на Django Framework с использованием СУБД PostgreSQL.
@@ -60,5 +58,3 @@
   - номер краты: 5555 5555 5555 4444;
   - срок действия: 01/30 (или любая будущая дата);
   - cvv код: 123 (или любой другой).
-
-Или вы можете протестировать сайт пройдя по ссылке https://menslinestore.herokuapp.com
